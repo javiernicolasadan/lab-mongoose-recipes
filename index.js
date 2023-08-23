@@ -17,21 +17,19 @@ mongoose
   })
   .then(() => {
     // Run your code here, after you have insured that the connection was made
-    const createRecipe = async () => {
-      const newRecipe = await Recipe.create({title: "tortilla", ingredients: ["huevos", "patatas"], cuisine: "whatever", dishType: "main_course", duration: 30, image: "", creator: "javier", created: "today" })
-      const {title} = newRecipe
-      console.log(title)
-    }
-    return createRecipe()
+    const newRecipe = Recipe.create({title: "tortilla", ingredients: ["huevos", "patatas"], cuisine: "whatever", dishType: "main_course", duration: 30, image: "", creator: "javier", created: "today" })
+    return newRecipe
+  })
+  .then((fromPrevious) => {
+    console.log(fromPrevious.title)
   })
   .then(()=>{
-    const insertRecipes = async () => {
-      const allData = await Recipe.insertMany(data)
-      allData.forEach((eachRecipe) => {
-        console.log(eachRecipe.title)
-      })
-    }
-    return insertRecipes()
+    return Recipe.insertMany(data)
+  })
+  .then((previousData) => {
+    previousData.forEach((eachRecipe) => {
+      console.log(eachRecipe.title)
+    })
   })
   .then (() => {
     const changeRigatoni = async () => {
